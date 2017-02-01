@@ -202,7 +202,14 @@
 
   </target>
 
-  <target name="setup:config-import" description="Import configuration from the config directory.">
+  <target name="setup:pre-config" description="Setup before importing configuration.">
+    <echo>Pre config setup... </echo>
+    <phingcall target="target-hook:invoke">
+      <property name="hook-name" value="pre-config-setup"/>
+    </phingcall>
+  </target>
+
+  <target name="setup:config-import" description="Import configuration from the config directory." depends="setup:pre-config">
     <echo>Importing configuration...</echo>
     <drush command="pm-enable" assume="yes" alias="${drush.alias}" passthru="false">
       <param>config</param>
